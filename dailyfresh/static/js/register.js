@@ -48,16 +48,23 @@ $(function(){
 		}
 		else
 		{
-			$('#user_name').next().hide();
-			error_name = false;
+		    $.get('/user/register_exist/?uname='+$('#user_name').val(),function(data){
+		        if(data.count==1){
+		            $('#user_name').next().html('用户名已经存在').show();
+		            error_name=true;
+		        }else{
+			        $('#user_name').next().hide();
+			        error_name = false;
+		        }
+		    });
 		}
 	}
 
 	function check_pwd(){
 		var len = $('#pwd').val().length;
-		if(len<8||len>20)
+		if(len<6||len>20)
 		{
-			$('#pwd').next().html('密码最少8位，最长20位')
+			$('#pwd').next().html('密码最少6位，最长20位')
 			$('#pwd').next().show();
 			error_password = true;
 		}
@@ -65,7 +72,7 @@ $(function(){
 		{
 			$('#pwd').next().hide();
 			error_password = false;
-		}		
+		}
 	}
 
 
@@ -83,8 +90,8 @@ $(function(){
 		{
 			$('#cpwd').next().hide();
 			error_check_password = false;
-		}		
-		
+		}
+
 	}
 
 	function check_email(){
